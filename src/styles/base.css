@@ -1,0 +1,7 @@
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-sans); color: var(--color-text); background: var(--color-bg); line-height: 1.5; }
+h1, h2, h3, p { margin: 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip-link { position: absolute; left: -999px; }
+.skip-link:focus { left: var(--space-4); top: var(--space-4); background: var(--color-surface); padding: var(--space-2) var(--space-3); z-index: 100; }
+:focus-visible { outline: 3px solid var(--color-brand); outline-offset: 2px; }
