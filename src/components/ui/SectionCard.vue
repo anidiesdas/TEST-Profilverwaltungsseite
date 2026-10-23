@@ -1,11 +1,12 @@
 <script setup lang="ts">
-defineProps<{ title: string; description?: string; headingId: string }>()
+defineProps<{ title: string; description?: string; headingId: string; eyebrow?: string }>()
 </script>
 
 <template>
   <section class="card" :aria-labelledby="headingId">
     <header class="card__header">
-      <div>
+      <div class="card__heading">
+        <p v-if="eyebrow" class="card__eyebrow">{{ eyebrow }}</p>
         <h2 :id="headingId" class="card__title">{{ title }}</h2>
         <p v-if="description" class="card__description">{{ description }}</p>
       </div>

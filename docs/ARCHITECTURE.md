@@ -1,4 +1,6 @@
-# Architektur – Profilverwaltung HTW-Portal (Entwurf v1, zur Review)
+# Architektur – Profilverwaltung HTW-Portal (v2, nach Peer-Review)
+
+> v1 wurde vom Senior Software Architect mit „Approve with changes“ bewertet. Alle MUST/SHOULD-Punkte sind eingearbeitet – siehe [ARCHITECTURE-REVIEW.md](./ARCHITECTURE-REVIEW.md). Die Abschnitte unten beschreiben den umgesetzten Stand.
 
 ## Kontext
 - Fiktiver Auftrag der HTW Berlin: Profilseite für Studierende im (noch nicht existierenden) Hochschulportal.
@@ -9,59 +11,55 @@
 1. **Trennung von UI, Zustand und Fachlogik**
    - `domain/` – reines TypeScript, framework-frei: Typen, Validierung, Feld-Policy (welche Felder editierbar sind), Profil-Vollständigkeit.
    - `services/` – Datenzugriff (Repository-Pattern). UI kennt nur das Interface.
-   - `stores/` – Anwendungszustand (reaktiver Store auf Basis von `reactive`/`readonly`, kein Pinia, um beim Pflicht-Stack zu bleiben).
+   - `stores/` – Anwendungszustand: `createProfileStore(repository)` (Factory, `reactive`/`readonly`, kein Pinia) – bereitgestellt per `provide/inject` mit typisiertem `InjectionKey`.
    - `composables/` – UI-nahe Logik (Formular-Draft, Dirty-Tracking, Toasts, Shortcuts).
    - `components/` – Darstellung; erhalten Daten per Props, melden per Events.
-2. **Kritische IDs sind nie editierbar** – Matrikelnummer, HTW-Kennung/-Mail, Studiengang, Immatrikulationsstatus, Geburtsdatum. Durchsetzung doppelt: (a) Domain-Typ `EditableProfile` enthält diese Felder nicht, (b) Repository-`update` akzeptiert nur `ProfileUpdate` und whitelisted Felder zur Laufzeit.
+2. **Kritische IDs sind nie editierbar** – Matrikelnummer, HTW-Account/-Mail, Studiengang, Status, Geburtsdatum. `EDITABLE_FIELDS as const` ist die einzige Quelle der Wahrheit; `ProfileUpdate` wird daraus abgeleitet. Der Mock (Server-Stellvertreter) lehnt unbekannte/gesperrte Schlüssel mit `ForbiddenFieldError` ab. **Hinweis:** Die Client-Whitelist ist UX, kein Sicherheitsmechanismus – ein echtes Backend muss sie selbst durchsetzen.
+4. **Optimistic Concurrency** – `Student.version`; `updateProfile(update, expectedVersion)` wirft `ConflictError`, die UI bietet „neuesten Stand laden & eigene Änderungen behalten“ oder „verwerfen“.
+5. **Typisierte Fehler** – `NetworkError`, `ValidationError` (feldweise), `ConflictError`, `NotFoundError`, `ForbiddenFieldError`; Lade- und Speicherfehler getrennt; bei Fehlern bleibt der Entwurf erhalten.
 3. **Austauschbarkeit** – Wechsel auf echte REST-API = neue Klasse `HttpStudentRepository implements StudentRepository`, Umschaltung in `services/index.ts`.
 
 ## Ordnerstruktur
 ```
 src/
-├─ main.ts                    # Bootstrap, Store-Provider
-├─ App.vue                    # Shell (Header, Layout, Toast-Region)
-├─ domain/
-│  ├─ student.ts              # Typen: Student, PersonalData, Address, StudyInfo, ProfileUpdate
-│  ├─ fieldPolicy.ts          # EDITABLE_FIELDS (Whitelist), pickEditable()
-│  ├─ validation.ts           # reine Validierungsregeln (PLZ, E-Mail, Telefon, Pflichtfelder)
-│  └─ profileInsights.ts      # Vollständigkeit, ECTS-Fortschritt, Regelstudienzeit
+├─ main.ts                       # einzige DI-Stelle: Repository → Store, Toaster
+├─ App.vue                       # Shell: Header, Main, Footer, Toast-Region
+├─ domain/                       # reines TypeScript, framework-frei
+│  ├─ student.ts                 # Typen (ISO-Datumsstrings)
+│  ├─ fieldPolicy.ts             # EDITABLE_FIELDS, ProfileUpdate, pickEditable, findForbiddenKeys
+│  ├─ validation.ts              # normalizeUpdate, validateProfileUpdate (Client + „Server“)
+│  ├─ profileInsights.ts         # Vollständigkeit, ECTS-Fortschritt, Diff, Anzeigename
+│  ├─ errors.ts · countries.ts · fieldLabels.ts
+│  └─ *.spec.ts
 ├─ services/
-│  ├─ StudentRepository.ts    # Interface
-│  ├─ MockStudentRepository.ts# localStorage + Latenz + Fehlersimulation
-│  ├─ mockData.ts             # Seed-Datensatz
-│  └─ index.ts                # Factory/DI
-├─ stores/
-│  └─ profileStore.ts         # state: student, status (idle|loading|saving|error), load(), save()
-├─ composables/
-│  ├─ useProfileForm.ts       # Draft-Kopie, isDirty, errors, reset, submit
-│  ├─ useToast.ts
-│  └─ useUnsavedChangesGuard.ts
+│  ├─ StudentRepository.ts       # Interface (Vertrag)
+│  ├─ MockStudentRepository.ts   # localStorage (htw.portal.profile.v1), Latenz, Fehlerquote
+│  └─ mockData.ts                # fiktiver Seed
+├─ stores/profileStore.ts        # Factory + InjectionKey + useProfileStore()
+├─ composables/                  # useProfileForm, useToasts, useUnsavedChangesGuard, useModShortcut
 ├─ components/
-│  ├─ ui/                     # BaseButton, BaseField, BaseCard, StatusBadge, ToastHost, Icon
-│  └─ profile/                # ProfileHero, PersonalDataSection, AddressSection,
-│                             # StudySection, EctsProgress, SemesterTimeline,
-│                             # ProfileEditPanel, LockedField
-├─ views/
-│  └─ ProfileView.vue         # Orchestriert Store + Sections
-├─ styles/
-│  ├─ tokens.css              # Design-Tokens (HTW-Farben, Spacing, Typo, Radius)
-│  └─ base.css
-└─ assets/brand/htw-logo.svg
-tests/ (vitest)               # Domain- und Composable-Tests
+│  ├─ ui/                        # BaseButton, BaseField, DataItem, LockedField, SectionCard, BrandLogo, ToastHost, format.ts
+│  └─ profile/                   # ProfileIntro, StudentIdCard, StudyProgressPanel, EctsProgress,
+│                                # SemesterTimeline, PersonalDataSection, AddressSection,
+│                                # StudySection, ProfileEditPanel, ChangePreview
+├─ views/ProfileView.vue         # orchestriert Store, Formular und Sections
+└─ styles/                       # tokens.css (CI + Dark Mode), base.css, layout.css, components.css
 ```
 
 ## Datenfluss
 `ProfileView` → `profileStore.load()` → `repository.getProfile()` → State.
-Bearbeiten: `useProfileForm(store.student)` erzeugt Draft → Validierung über `domain/validation` → `store.save(pickEditable(draft))` → `repository.updateProfile()` → State ersetzt → Toast.
+Bearbeiten: `useProfileForm(store)` erzeugt Draft → `normalizeUpdate` + `validateProfileUpdate` (live, Anzeige nach Blur/Submit) → `store.save(update)` → `repository.updateProfile(update, version)` (Whitelist, Validierung, Versionsprüfung) → State ersetzt → Toast. Fehler: State unverändert, Draft bleibt, Feldfehler des Servers werden ins Formular gemappt.
 
-## Kreative Funktionen (Vorschlag)
+## Kreative Funktionen (umgesetzt)
 - ECTS-Fortschrittsring + Semester-Zeitstrahl
 - Profil-Vollständigkeit mit Hinweisen
 - Änderungsvorschau (Diff alt → neu) vor dem Speichern
 - Gesperrte Felder mit Schloss + Erklärung, wie sie geändert werden können
 - Bevorzugter Name & Pronomen (inklusiv)
-- Ungespeicherte-Änderungen-Schutz, Strg/Cmd+S
-- Dark Mode via `prefers-color-scheme`
+- Ungespeicherte-Änderungen-Schutz (`beforeunload` + Verwerfen-Bestätigung), Strg/Cmd+S
+- Kontextsensitives Bearbeiten (Chips „+ Telefon ergänzen“ springen direkt ins Feld)
+- Digitaler Studierendenausweis, Anschrift als Briefumschlag
+- Dark Mode via `prefers-color-scheme`, `prefers-reduced-motion`
 
 ## Qualität
 - `vue-tsc --noEmit` (strict), `vitest` für domain/ und composables/

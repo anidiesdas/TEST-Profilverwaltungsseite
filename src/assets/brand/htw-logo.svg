@@ -1,6 +1,0 @@
-<!-- Nachbau der HTW-Berlin-Wortmarke als Platzhalter. Vor Produktivnahme durch die offizielle Logodatei aus dem CD-Portal ersetzen (gleicher Dateiname). -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 40" role="img" aria-label="HTW Berlin">
-  <rect x="0" y="0" width="8" height="40" fill="#76B900"/>
-  <text x="14" y="27" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="28" letter-spacing="1" fill="#76B900">HTW</text>
-  <text x="80" y="27" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="13" letter-spacing="1.5" fill="#3C3C3B">BERLIN</text>
-</svg>

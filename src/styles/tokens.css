@@ -1,16 +1,93 @@
+/*
+ * Design-Tokens – Konzept „Campus-Ausweis“
+ * CI-Farben der HTW Berlin: Grün #76B900, Anthrazit #3C3C3B, Orange #FF5F00.
+ * Abgeleitete Stufen (-text, -soft) existieren nur, um WCAG-AA-Kontraste einzuhalten.
+ */
 :root {
-  --color-brand: #76b900;
-  --color-brand-strong: #4d7a00;
-  --color-text: #1f2328;
-  --color-text-muted: #5b636b;
-  --color-bg: #f6f7f8;
-  --color-surface: #ffffff;
-  --color-border: #dfe3e6;
-  --color-danger: #c62828;
-  --color-warning-bg: #fff4e5;
-  --color-success: #2e7d32;
-  --radius: 10px;
-  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px; --space-6: 32px;
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  /* CI */
+  --htw-green: #76b900;
+  --htw-anthracite: #3c3c3b;
+  --htw-orange: #ff5f00;
+
+  /* Semantik – hell */
+  --c-bg: #f4f5f1;
+  --c-surface: #ffffff;
+  --c-surface-2: #f7f8f5;
+  --c-border: #e2e5dd;
+  --c-border-strong: #c9cec2;
+  --c-text: #1d1f1c;
+  --c-text-muted: #5d6359;
+  --c-text-inverse: #ffffff;
+
+  --c-brand: var(--htw-green);
+  --c-brand-text: #4a7400;          /* Grün für Text/Links auf Hell, 5.4:1 */
+  --c-brand-soft: #eef7df;
+  --c-on-brand: #142000;            /* Text auf CI-Grün, 9:1 */
+
+  --c-band: var(--htw-anthracite);
+  --c-on-band: #ffffff;
+  --c-on-band-muted: #c8cbc4;
+
+  --c-accent: var(--htw-orange);
+  --c-accent-text: #b13f00;
+  --c-accent-soft: #fff1e8;
+
+  --c-danger: #c42b1c;
+  --c-danger-soft: #fdecea;
+  --c-success: #3d7a00;
+
+  --shadow-card: 0 1px 0 rgb(20 30 10 / 0.04), 0 12px 32px -18px rgb(20 30 10 / 0.25);
+  --shadow-pop: 0 24px 60px -20px rgb(10 15 5 / 0.45);
+
+  /* Form */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* Abstände (4er-Raster) */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+
+  /* Typografie */
+  --font-sans: 'Segoe UI Variable', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --fs-xs: 0.75rem; --fs-sm: 0.875rem; --fs-md: 1rem; --fs-lg: 1.25rem; --fs-xl: 1.75rem; --fs-2xl: clamp(1.9rem, 1.3rem + 2vw, 2.6rem);
+
+  /* Bewegung */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+
+  --layout-max: 1200px;
+  --gutter: clamp(16px, 3vw, 32px);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #111311;
+    --c-surface: #1a1d19;
+    --c-surface-2: #20241f;
+    --c-border: #2d322b;
+    --c-border-strong: #3e4539;
+    --c-text: #eceee8;
+    --c-text-muted: #a3a99d;
+
+    --c-brand-text: #9ad62a;
+    --c-brand-soft: #22300f;
+
+    --c-band: #1f211f;
+    --c-on-band-muted: #a9ada4;
+
+    --c-accent-text: #ff8a47;
+    --c-accent-soft: #33200f;
+
+    --c-danger: #ff6b5a;
+    --c-danger-soft: #3a1714;
+    --c-success: #9ad62a;
+
+    --shadow-card: 0 1px 0 rgb(0 0 0 / 0.3), 0 12px 32px -18px rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
 }

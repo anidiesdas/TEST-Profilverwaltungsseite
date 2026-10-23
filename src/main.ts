@@ -5,6 +5,7 @@ import { createProfileStore, ProfileStoreKey } from '@/stores/profileStore'
 import { createToaster, ToasterKey } from '@/composables/useToasts'
 import './styles/tokens.css'
 import './styles/base.css'
+import './styles/layout.css'
 import './styles/components.css'
 
 /**

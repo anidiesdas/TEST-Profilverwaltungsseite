@@ -1,11 +1,29 @@
 <script setup lang="ts">
+import { nextTick, ref, watch } from 'vue'
 import { useToasts } from '@/composables/useToasts'
 
 const { toasts, dismiss } = useToasts()
+const host = ref<HTMLElement | null>(null)
+
+/**
+ * Toasts laufen als Popover im Top-Layer, damit sie auch über dem modalen
+ * Bearbeiten-Dialog sichtbar sind. Erneutes Öffnen legt sie wieder nach oben.
+ */
+watch(
+  () => toasts.length,
+  async (count, previous) => {
+    await nextTick()
+    const el = host.value
+    if (!el || typeof el.showPopover !== 'function') return
+    if (el.matches(':popover-open') && count > (previous ?? 0)) el.hidePopover()
+    if (count > 0 && !el.matches(':popover-open')) el.showPopover()
+    if (count === 0 && el.matches(':popover-open')) el.hidePopover()
+  },
+)
 </script>
 
 <template>
-  <div class="toast-host" role="region" aria-label="Benachrichtigungen">
+  <div ref="host" class="toast-host" popover="manual" role="region" aria-label="Benachrichtigungen">
     <TransitionGroup name="toast">
       <div
         v-for="toast in toasts"
