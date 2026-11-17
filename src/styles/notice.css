@@ -46,8 +46,6 @@
   cursor: pointer;
 }
 
-/* Von der KI ergänzt: „Mach den Button beim Hover dunkler.“
-   Funktioniert – verstößt aber gegen drei Team-Regeln. */
 #deadline-notice .deadline-notice__action:hover {
   background: #1e40af !important;
 }
