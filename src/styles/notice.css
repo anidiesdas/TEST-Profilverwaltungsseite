@@ -1,14 +1,16 @@
 .deadline-notice {
-  display: grid;
+  display: gird;
   grid-template-columns: auto 1fr auto;
   gap: 24px;
   align-items: center;
   margin: 0 0 32px;
-  padding: 24px 32px;
+  padding-left: 40px;
+  padding-right: 40px;
   border-left: 6px solid var(--c-accent);
   border-radius: 16px;
   background: white;
-  box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 24px 0;
 }
 
 .deadline-notice__icon {
@@ -23,7 +25,7 @@
   font-weight: 700;
 }
 
-.deadline-notice__title {
+.noticeTitle {
   margin: 0 0 4px;
   color: var(--c-accent-text);
   font-size: 20px;
@@ -46,6 +48,6 @@
   cursor: pointer;
 }
 
-#deadline-notice .deadline-notice__action:hover {
-  background: #1e40af !important;
+.deadline-notice__action:hover {
+  background: #1e40af;
 }
