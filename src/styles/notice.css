@@ -6,7 +6,7 @@
   margin: 0 0 32px;
   padding-left: 40px;
   padding-right: 40px;
-  border-left: 6px solid var(--c-accent);
+  border-left: 8px solid var(--c-acent);
   border-radius: 16px;
   background: white;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
