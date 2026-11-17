@@ -1,17 +1,14 @@
-/*
- * Hinweis-Banner „Rückmeldefrist“
- * Demo-Komponente für die Stylelint-Präsentation
- */
 .deadline-notice {
   display: grid;
   grid-template-columns: auto 1fr auto;
+  gap: 24px;
   align-items: center;
-  gap: var(--s-5);
-  padding: var(--s-5) var(--s-6);
-  border-left: 8px solid var(--c-accent);
-  border-radius: var(--radius-lg);
-  background: var(--c-surface);
-  box-shadow: var(--shadow-card);
+  margin: 0 0 32px;
+  padding: 24px 32px;
+  border-left: 6px solid var(--c-accent);
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
 }
 
 .deadline-notice__icon {
@@ -21,34 +18,36 @@
   height: calc(48px + 16px);
   border-radius: 50%;
   background: var(--c-accent);
-  color: var(--c-text-inverse);
-  font-size: var(--fs-xl);
+  color: white;
+  font-size: 32px;
   font-weight: 700;
 }
 
 .deadline-notice__title {
-  font-size: var(--fs-lg);
-  font-weight: 700;
+  margin: 0 0 4px;
   color: var(--c-accent-text);
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .deadline-notice__text {
-  margin-top: var(--s-1);
-  color: var(--c-text-muted);
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .deadline-notice__action {
-  padding: var(--s-3) var(--s-5);
-  border: 0;
-  border-radius: var(--radius-pill);
+  padding: 12px 24px;
+  border: none;
+  border-radius: 999px;
   background: var(--c-accent);
-  color: var(--c-text-inverse);
-  font-weight: 700;
-  white-space: nowrap;
+  color: white;
+  font-weight: 600;
   cursor: pointer;
 }
 
-/* von KI ergänzt: „Mach den Button beim Hover dunkler“ */
-.deadline-notice__action:hover {
-  background: #c94800;
+/* Von der KI ergänzt: „Mach den Button beim Hover dunkler.“
+   Funktioniert – verstößt aber gegen drei Team-Regeln. */
+#deadline-notice .deadline-notice__action:hover {
+  background: #1e40af !important;
 }
