@@ -1,0 +1,54 @@
+/*
+ * Hinweis-Banner „Rückmeldefrist“
+ * Demo-Komponente für die Stylelint-Präsentation
+ */
+.deadline-notice {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s-5);
+  padding: var(--s-5) var(--s-6);
+  border-left: 8px solid var(--c-accent);
+  border-radius: var(--radius-lg);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.deadline-notice__icon {
+  display: grid;
+  place-items: center;
+  width: calc(48px + 16px);
+  height: calc(48px + 16px);
+  border-radius: 50%;
+  background: var(--c-accent);
+  color: var(--c-text-inverse);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+}
+
+.deadline-notice__title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--c-accent-text);
+}
+
+.deadline-notice__text {
+  margin-top: var(--s-1);
+  color: var(--c-text-muted);
+}
+
+.deadline-notice__action {
+  padding: var(--s-3) var(--s-5);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--c-accent);
+  color: var(--c-text-inverse);
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* von KI ergänzt: „Mach den Button beim Hover dunkler“ */
+.deadline-notice__action:hover {
+  background: #c94800;
+}

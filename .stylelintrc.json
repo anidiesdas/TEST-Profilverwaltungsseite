@@ -1,0 +1,32 @@
+{
+  "extends": [
+    "stylelint-config-standard"
+  ],
+  "referenceFiles": "src/styles/tokens.css",
+  "rules": {
+    "selector-class-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?$",
+      {
+        "message": "Klassennamen bitte in BEM-Schreibweise: block__element--modifier"
+      }
+    ],
+    "color-no-hex": [
+      true,
+      {
+        "message": "Keine Hex-Farben – bitte Design-Token aus tokens.css verwenden"
+      }
+    ],
+    "no-unknown-custom-properties": true,
+    "declaration-property-value-no-unknown": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/styles/tokens.css"
+      ],
+      "rules": {
+        "color-no-hex": null
+      }
+    }
+  ]
+}
