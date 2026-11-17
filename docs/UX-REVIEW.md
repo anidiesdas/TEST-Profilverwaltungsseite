@@ -30,3 +30,15 @@
 - Kontraste AA für Text und Bedienelemente, sichtbarer Fokusring in CI-Grün
 - Native `<dialog>` (Fokusfalle, Esc), `aria-live` für Toasts, Fehlermeldungen per `aria-describedby`
 - Tastaturbedienung vollständig, Skip-Link, semantische Landmarks und Überschriftenhierarchie
+
+## Nachtrag: Farbschema-Umschalter
+
+**Anlass:** Rückmeldung aus dem Test – die Seite erschien im dunklen Design, weil sie ausschließlich der Systemeinstellung folgte. Nutzende konnten das in der Seite nicht ändern.
+
+**Lösung:**
+- Segment-Umschalter **System / Hell / Dunkel** im Header (auf schmalen Screens nur Icons). Standard: **System**.
+- Die Wahl wird im Browser gespeichert; „System“ entfernt den gespeicherten Wert wieder und folgt Änderungen am Betriebssystem live.
+- Technisch: alle Farb-Tokens als `light-dark(hell, dunkel)`; das Theme wird nur über `color-scheme` an `<html>` gesteuert (`data-theme`). Jede Farbe ist damit genau einmal definiert.
+- Ein kleines Inline-Skript in `index.html` setzt das gespeicherte Theme vor dem ersten Rendern – kein Aufblitzen des falschen Schemas.
+- Während des Wechsels werden Übergänge kurz ausgesetzt, damit nicht jede Fläche einzeln nachblendet.
+- Barrierefreiheit: native Radiogruppe mit `<fieldset>`/`<legend>`, per Tab und Pfeiltasten bedienbar, sichtbarer Fokusring.

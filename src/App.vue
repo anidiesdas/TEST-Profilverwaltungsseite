@@ -2,6 +2,7 @@
 import ProfileView from '@/views/ProfileView.vue'
 import BrandLogo from '@/components/ui/BrandLogo.vue'
 import ToastHost from '@/components/ui/ToastHost.vue'
+import ThemeSwitcher from '@/components/ui/ThemeSwitcher.vue'
 </script>
 
 <template>
@@ -18,6 +19,7 @@ import ToastHost from '@/components/ui/ToastHost.vue'
         <span class="app-header__link is-disabled" title="Nicht Teil dieses Übungsprojekts">Prüfungen</span>
         <a href="#main" class="app-header__link is-active" aria-current="page">Mein Profil</a>
       </nav>
+      <ThemeSwitcher />
     </div>
   </header>
   <main id="main" class="app-main" tabindex="-1">

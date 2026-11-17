@@ -24,11 +24,12 @@
 }
 .app-header__brand { display: flex; align-items: center; gap: var(--s-3); text-decoration: none; color: var(--c-text); }
 .brand-logo { display: block; width: auto; color: var(--htw-anthracite); }
-@media (prefers-color-scheme: dark) { .app-header .brand-logo { color: #fff; } }
+.app-header .brand-logo { color: var(--c-logo-text); }
 .app-header__divider { width: 1px; height: 24px; background: var(--c-border-strong); }
 .app-header__portal { font-size: var(--fs-sm); font-weight: 600; color: var(--c-text-muted); letter-spacing: 0.01em; }
 .app-header__nav { margin-left: auto; display: flex; gap: var(--s-1); }
 .app-header__link {
+  white-space: nowrap;
   padding: var(--s-2) var(--s-3);
   border-radius: var(--radius-pill);
   font-size: var(--fs-sm);
@@ -107,6 +108,42 @@
 }
 @media (max-width: 560px) {
   .app-header__divider, .app-header__portal { display: none; }
+  .app-header__nav { display: none; }
+  .app-header__inner .theme-switch { margin-left: auto; }
   .band__inner { padding-top: var(--s-6); }
   .layout { gap: var(--s-4); }
+}
+
+/* ───── Farbschema-Umschalter ───── */
+.is-theme-switching *, .is-theme-switching *::before, .is-theme-switching *::after { transition: none !important; }
+
+.theme-switch {
+  display: inline-flex;
+  gap: 2px;
+  margin: 0;
+  padding: 3px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-pill);
+  background: var(--c-surface-2);
+}
+.theme-switch__option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--c-text-muted);
+  cursor: pointer;
+  transition: background var(--dur-fast), color var(--dur-fast);
+}
+.theme-switch__option:hover { color: var(--c-text); }
+.theme-switch__option.is-active { background: var(--c-surface); color: var(--c-text); box-shadow: 0 1px 3px rgb(0 0 0 / 0.15); }
+.theme-switch__option:has(input:focus-visible) { outline: 3px solid var(--c-brand); outline-offset: 1px; }
+
+@media (max-width: 960px) {
+  .theme-switch__label { display: none; }
+  .theme-switch__option { padding: 0 8px; }
 }

@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      // Gespeichertes Farbschema vor dem ersten Rendern setzen (verhindert Aufblitzen).
+      // Schlüssel und Werte wie in src/composables/useTheme.ts.
+      try {
+        var t = localStorage.getItem('htw.portal.theme')
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t
+      } catch (e) {}
+    </script>
     <title>Mein Profil · HTW Berlin Hochschulportal</title>
   </head>
   <body>

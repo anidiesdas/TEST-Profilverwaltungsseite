@@ -3,6 +3,7 @@ import App from './App.vue'
 import { MockStudentRepository } from '@/services'
 import { createProfileStore, ProfileStoreKey } from '@/stores/profileStore'
 import { createToaster, ToasterKey } from '@/composables/useToasts'
+import { createThemeController, ThemeKey } from '@/composables/useTheme'
 import './styles/tokens.css'
 import './styles/base.css'
 import './styles/layout.css'
@@ -22,4 +23,12 @@ const repository = new MockStudentRepository({
 createApp(App)
   .provide(ProfileStoreKey, createProfileStore(repository))
   .provide(ToasterKey, createToaster())
+  .provide(
+    ThemeKey,
+    createThemeController({
+      storage: window.localStorage,
+      root: document.documentElement,
+      systemDark: window.matchMedia('(prefers-color-scheme: dark)'),
+    }),
+  )
   .mount('#app')

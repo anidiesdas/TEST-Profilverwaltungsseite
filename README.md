@@ -35,6 +35,8 @@ npm run dev          # Entwicklungsserver → http://localhost:5173
 **Konflikt ausprobieren:** Seite in zwei Tabs öffnen, in Tab A speichern, danach in Tab B speichern → Konfliktdialog.
 **Zurücksetzen:** im Browser `localStorage.removeItem('htw.portal.profile.v1')` ausführen.
 
+**Farbschema:** über den Umschalter oben rechts. „System“ übernimmt die Einstellung von Betriebssystem bzw. Browser und reagiert live auf Änderungen dort.
+
 ## Funktionen
 
 - **Profilansicht** mit digitalem Studierendenausweis, Begrüßung und Profil-Vollständigkeit
@@ -44,7 +46,8 @@ npm run dev          # Entwicklungsserver → http://localhost:5173
 - **Bearbeiten-Sheet:** Live-Validierung, Änderungsvorschau (bisher → neu), Strg/Cmd+S, Schutz vor Datenverlust
 - **Kontextsensitiv:** „+ Telefon ergänzen“ öffnet den Editor direkt im richtigen Feld
 - **Robust:** Versionskonflikte, Netzwerkfehler und Server-Validierung werden verständlich behandelt
-- **Barrierefrei & modern:** Tastaturbedienung, ARIA, AA-Kontraste, Dark Mode, Reduced Motion, responsiv bis 320 px
+- **Farbschema wählbar:** Umschalter „System / Hell / Dunkel“ im Header. Standard ist „System“ (folgt dem Betriebssystem), eine explizite Wahl wird im Browser gespeichert (`localStorage`, Schlüssel `htw.portal.theme`).
+- **Barrierefrei & modern:** Tastaturbedienung, ARIA, AA-Kontraste, Reduced Motion, responsiv bis 320 px
 
 ## Architektur
 

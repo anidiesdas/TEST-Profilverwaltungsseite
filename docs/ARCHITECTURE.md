@@ -22,7 +22,7 @@
 ## Ordnerstruktur
 ```
 src/
-├─ main.ts                       # einzige DI-Stelle: Repository → Store, Toaster
+├─ main.ts                       # einzige DI-Stelle: Repository → Store, Toaster, Theme-Controller
 ├─ App.vue                       # Shell: Header, Main, Footer, Toast-Region
 ├─ domain/                       # reines TypeScript, framework-frei
 │  ├─ student.ts                 # Typen (ISO-Datumsstrings)
@@ -36,14 +36,14 @@ src/
 │  ├─ MockStudentRepository.ts   # localStorage (htw.portal.profile.v1), Latenz, Fehlerquote
 │  └─ mockData.ts                # fiktiver Seed
 ├─ stores/profileStore.ts        # Factory + InjectionKey + useProfileStore()
-├─ composables/                  # useProfileForm, useToasts, useUnsavedChangesGuard, useModShortcut
+├─ composables/                  # useProfileForm, useToasts, useTheme, useUnsavedChangesGuard, useModShortcut
 ├─ components/
-│  ├─ ui/                        # BaseButton, BaseField, DataItem, LockedField, SectionCard, BrandLogo, ToastHost, format.ts
+│  ├─ ui/                        # BaseButton, BaseField, DataItem, LockedField, SectionCard, BrandLogo, ThemeSwitcher, ToastHost, format.ts
 │  └─ profile/                   # ProfileIntro, StudentIdCard, StudyProgressPanel, EctsProgress,
 │                                # SemesterTimeline, PersonalDataSection, AddressSection,
 │                                # StudySection, ProfileEditPanel, ChangePreview
 ├─ views/ProfileView.vue         # orchestriert Store, Formular und Sections
-└─ styles/                       # tokens.css (CI + Dark Mode), base.css, layout.css, components.css
+└─ styles/                       # tokens.css (CI, light-dark()-Tokens), base.css, layout.css, components.css
 ```
 
 ## Datenfluss
@@ -59,7 +59,7 @@ Bearbeiten: `useProfileForm(store)` erzeugt Draft → `normalizeUpdate` + `valid
 - Ungespeicherte-Änderungen-Schutz (`beforeunload` + Verwerfen-Bestätigung), Strg/Cmd+S
 - Kontextsensitives Bearbeiten (Chips „+ Telefon ergänzen“ springen direkt ins Feld)
 - Digitaler Studierendenausweis, Anschrift als Briefumschlag
-- Dark Mode via `prefers-color-scheme`, `prefers-reduced-motion`
+- Farbschema System/Hell/Dunkel (Standard System, Wahl im Browser gespeichert), `prefers-reduced-motion`
 
 ## Qualität
 - `vue-tsc --noEmit` (strict), `vitest` für domain/ und composables/
