@@ -15,6 +15,7 @@ import PersonalDataSection from '@/components/profile/PersonalDataSection.vue'
 import AddressSection from '@/components/profile/AddressSection.vue'
 import StudySection from '@/components/profile/StudySection.vue'
 import ProfileEditPanel from '@/components/profile/ProfileEditPanel.vue'
+import DeadlineNotice from '@/components/profile/DeadlineNotice.vue'
 
 const store = useProfileStore()
 const form = useProfileForm(store)
@@ -87,6 +88,7 @@ async function save() {
       </div>
 
       <div class="layout layout--overlap">
+        <DeadlineNotice class="col-12" />
         <StudentIdCard class="col-5" :student="student" @edit="openEditor()" />
         <StudyProgressPanel class="col-7" :study="student.study" />
         <PersonalDataSection class="col-7" :student="student" @edit="openEditor" />
