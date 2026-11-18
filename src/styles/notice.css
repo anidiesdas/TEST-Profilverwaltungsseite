@@ -1,5 +1,5 @@
 .deadline-notice {
-  display: gird;
+  display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 24px;
   align-items: center;
@@ -7,11 +7,10 @@
   padding-block: 24px;
   padding-left: 40px;
   padding-right: 40px;
-  border-left: 6px solid var(--c-acent);
+  border-left: 6px solid var(--c-accent);
   border-radius: 16px;
   background: white;
   box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
-  padding: 40px 0;
 }
 
 .deadline-notice__icon {
